@@ -1,7 +1,10 @@
-const apiReader = require('./apiReader')
+const apiReader = require('./remoteApiReader')
 
 function parsCriptoData(data) {
-  const returnedData = [];
+  const returnedData = {
+    data: [],
+    errors: false
+  };
   try {
     data.forEach((item) => {
       const newItem = {
@@ -12,23 +15,26 @@ function parsCriptoData(data) {
         priceUsd: item.priceUsd,
         change: item.changePercent24Hr
       }
-      returnedData.push(newItem);
+      returnedData.data.push(newItem);
      })
   } catch (e) {
     console.log('error in function parsCriptoData parameter data is empty or no valid', e);
+    returnedData.errors = true;
   }
   return returnedData;
 }
 
 module.exports = {
-  getCryptoData: async (url) => {
+  getCryptoData: async (apiUrl) => {
     const returnedData = {
       data: [],
       errors: false
     }
-    const data = await apiReader(url);
+    const data = await apiReader(apiUrl);
     if (!data.errors) {
-       returnedData.data = parsCriptoData(data.data);
+       const parsedData = parsCriptoData(data.data);
+       if (parsedData.errors) returnedData.errors = true;
+       else returnedData.data = parsedData.data;
     } else {
       returnedData.errors = true;
     }

@@ -11,7 +11,7 @@ module.exports  = async (apiUrl) => {
       resultObj.data = data;
     })
     .catch ((error) => {
-      console.log('Failed to get data from remote api')
+      console.log('Failed to get data from remote api', error)
       resultObj.errors = true
     })
     return resultObj;

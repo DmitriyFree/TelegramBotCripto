@@ -1,3 +1,5 @@
+const { Markup } = require("telegraf");
+
 function findRates(data, symbol, isFiat) {
 
   if (isFiat) {
@@ -16,21 +18,27 @@ module.exports = {
 
   randerCryptocurrency: (ctx, data) => {
     const stringAnswer =
-      `<b>${data.name}</b>`+
+      `✅  <b>${data.name}</b>`+
       `\nСимвол: ${data.symbol}`+
       `\nРанг: ${data.rank}`+
       `\nЦена: ${(1 * data.priceUsd).toFixed(2)}`+
       `\nИзменение: ${(1 * data.change).toFixed(2)}%`;
-    ctx.replyWithHTML(stringAnswer);
+    ctx.replyWithHTML(stringAnswer, Markup.inlineKeyboard([[
+      Markup.button.callback('Продолжыть', 'repeat'),
+      Markup.button.callback('Выйти в главное меню', 'exit'),
+      ]]));
   },
 
   reanderOneCoin: (ctx, data) => {
 
     const stringAnswer =
-      `Название: ${data.id}`+
+      `✅  Название: ${data.id}`+
       `\nСимвол: ${data.symbol}`+
       `\nЦена: 1USD => ${(1 / data.rate).toFixed(2)} ${data.symbol}`;
-    ctx.reply(stringAnswer);
+    ctx.reply(stringAnswer, Markup.inlineKeyboard([[
+      Markup.button.callback('Продолжыть', 'repeat'),
+      Markup.button.callback('Выйти в главное меню', 'exit'),
+      ]]));
   },
 
   randerTotalRates: (ctx, data) => {

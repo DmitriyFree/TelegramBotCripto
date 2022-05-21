@@ -23,8 +23,8 @@ const cryptoKeyboard = Markup
   .keyboard(
     [
       ['bitcoin', 'ethereum'],
-      [ 'xrp', 'litecoin', 'cardano'],
-      ['stellar', 'solana'],
+      [ 'litecoin', 'XRP', 'ADA'],
+      ['DOGE', 'DOT'],
       ['/main']
     ], {})
   .oneTime();

@@ -6,7 +6,7 @@ dot.config();
 
 function cryptoThrottle() {
 
-  const url = `${process.env.URLAPI}/assets`;
+  const url = `${process.env.URLAPI}/assets?limit=2000`;
   const dalay = process.env.DELAY || 60000;
   let isThrottle = false;
   const savedCryptoData = {
@@ -37,7 +37,7 @@ function cryptoThrottle() {
 
 function ratesThrottle() {
 
-  const url = `${process.env.URLAPI}/rates`;
+  const url = `${process.env.URLAPI}/rates?limit=200`;
   const dalay = process.env.DELAY || 60000;
   let isThrottle = false;
   const savedCryptoData = {
@@ -77,9 +77,14 @@ module.exports = {
     if (response.errors) {
       returnedData.errors = true;
     }
-    for (let i = 0; i < response.data.length; i++) {
+    try {
+      for (let i = 0; i < response.data.length; i++) {
         if (i >= maxRank) break;
         returnedData.data.push(response.data[i]);
+      }
+    } catch (e) {
+      console.log('DataManager error', e);
+      returnedData.errors = true;
     }
     return returnedData;
   },
@@ -93,7 +98,12 @@ module.exports = {
     if (response.errors) {
       returnedData.errors = false;
     } else {
-      returnedData.data = response.data.find((item) => item.id === id);
+      try {
+        returnedData.data = response.data.find((item) => item.id === id || item.symbol === id);
+      } catch (e) {
+        console.log('DataManager error', e);
+        returnedData.errors = true;
+      }
     }
     return returnedData;
   },
@@ -107,10 +117,14 @@ module.exports = {
     if (response.errors) {
       returnedData.errors = true;
     }
-
-    for (let i = 0; i < response.data.length; i++) {
+    try {
+      for (let i = 0; i < response.data.length; i++) {
         if (i >= maxRank) break;
         returnedData.data.push(response.data[i]);
+      }
+    } catch (e) {
+      console.log('DataManager error', e);
+      returnedData.errors = true;
     }
     return returnedData;
   },
@@ -122,10 +136,16 @@ module.exports = {
       errors: false
     }
     if (response.errors) {
-      returnedData.errors = false;
+      returnedData.errors = true;
     } else {
-      const list = response.data;
-      returnedData.data = list.find((item) => item.id === id || item.symbol === id);
+      try {
+        const list = response.data;
+        returnedData.data = list.find((item) => item.id === id || item.symbol === id);
+      } catch (e) {
+        console.log('DataManager error', e);
+        returnedData.errors = true;
+      }
+
     }
     return returnedData;
   }

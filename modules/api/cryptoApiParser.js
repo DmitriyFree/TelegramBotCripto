@@ -13,6 +13,7 @@ function parsCriptoData(data) {
         symbol: item.symbol,
         name: item.name,
         priceUsd: item.priceUsd,
+        capitalization: item.marketCapUsd,
         change: item.changePercent24Hr
       }
       returnedData.data.push(newItem);

@@ -16,9 +16,9 @@ const token = process.env.TOKEN;
 
 const bot = new Telegraf(token);
 
-bot.start((ctx) => ctx.replyWithHTML(messeges.start));
+bot.start(async (ctx) => await ctx.replyWithHTML(messeges.start, keyboards.mainKeyboard));
 
-bot.help((ctx) => ctx.reply(messeges.help));
+bot.help(async (ctx) => await ctx.replyWithHTML(messeges.help, keyboards.mainKeyboard));
 
 bot.command('commands', async (ctx) => {
   try {
@@ -41,23 +41,29 @@ bot.command('main', async (ctx) => {
 
 bot.command('totalInfo', async (ctx) => {
 
-  const response = await cryptoDataManager.getRatesByRank(192);
-
-  if(response.errors) {
-    ctx.telegram.sendMessage(chatId, messeges.readDataError);
-  } else {
-    telegramAnswerHandler.randerTotalRates(ctx, response.data);
+  try {
+    const response = await cryptoDataManager.getRatesByRank(200);
+    if(response.errors) {
+      ctx.telegram.sendMessage(chatId, messeges.readDataError);
+    } else {
+      telegramAnswerHandler.randerTotalRates(ctx, response.data);
+    }
+  } catch (e) {
+    console.log('Error in totalInfo command', e);
+    await ctx.reply(messeges.defaultError);
   }
 })
 
-
 // Scenes
-const scenes = new Scenes.Stage([cryptoWizard, ratesWizard]);
-bot.use(session());
-bot.use(scenes.middleware());
-bot.command("crypto", Scenes.Stage.enter("cryptoWizard"));
-bot.command('rates', Scenes.Stage.enter('ratesWizard'));
-
+try {
+  const scenes = new Scenes.Stage([cryptoWizard, ratesWizard]);
+  bot.use(session());
+  bot.use(scenes.middleware());
+  bot.command("crypto", Scenes.Stage.enter("cryptoWizard"));
+  bot.command('rates', Scenes.Stage.enter('ratesWizard'));
+} catch (e) {
+  console.log('Error in scenes', e);
+}
 
 bot.launch();
 

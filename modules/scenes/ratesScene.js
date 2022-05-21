@@ -17,23 +17,29 @@ composer1.command('/rates', async (ctx) => {
 const composer2 = new Composer();
 
 composer2 .on('text', async (ctx) => {
-  const text = ctx.message.text;
-  if (text.includes('/')) return ctx.scene.leave();
-  if (!textCommandHelper.isRates(text)) {
-    await ctx.reply(messeges.ratesError);
-    await ctx.reply(text, keyboards.ratesKeyboard);
-    return ctx.wizard.selectStep(1);
-  } else {
-    const data = await cryptoDataManager.getRatesById(text);
-    if (data.errors) {
-      await ctx.telegram.sendMessage(chatId, messeges.readDataError);
-      await ctx.reply(text);
+  try {
+    const text = ctx.message.text;
+    if (text.includes('/')) return ctx.scene.leave();
+    if (!textCommandHelper.isRates(text)) {
+      await ctx.reply(messeges.ratesError);
+      await ctx.reply(text, keyboards.ratesKeyboard);
       return ctx.wizard.selectStep(1);
     } else {
-      telegramAnswerHandler.reanderOneCoin(ctx, data.data);
-      return ctx.wizard.selectStep(1);
-    }
+      const data = await cryptoDataManager.getRatesById(text);
+      if (data.errors) {
+        await ctx.telegram.sendMessage(chatId, messeges.readDataError);
+        await ctx.reply(text);
+        return ctx.wizard.selectStep(1);
+      } else {
+        telegramAnswerHandler.reanderOneCoin(ctx, data.data);
+        return ctx.wizard.selectStep(1);
+      }
 
+    }
+  } catch (e) {
+    console.log('RatesScene error', e);
+    await ctx.reply(messeges.defaultError);
+    return ctx.wizard.selectStep(1);
   }
 })
 

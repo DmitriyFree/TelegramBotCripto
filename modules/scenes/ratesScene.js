@@ -1,17 +1,16 @@
-const {Markup, Scenes, Composer} = require('telegraf');
+const {Scenes, Composer} = require('telegraf');
 
-const cryptoDataManager = require('../cryptoDataManager');
-const telegramAnswerHandler = require('../telegramAnswerHandler');
-const textCommandHelper = require('../textCommandHelper');
+const cryptoDataManager = require('../api/cryptoDataManager');
+const telegramAnswerHandler = require('../answers/telegramAnswerHandler');
+const textCommandHelper = require('../helpers/textCommandHelper');
 
-const texts = require('../templates/texts');
+const messeges = require('../templates/messeges');
+const keyboards = require('../templates/keyboards');
 
 const composer1 = new Composer();
 
-composer1.on('text', async (ctx) => {
-  await ctx.reply(texts.ratesQuestion,
-    Markup.keyboard([['UAH', 'RUB'],[ 'EUR', 'PLN', 'KZT'], ['GBP', 'SEK'], ['/main']], {}).oneTime()
-  )
+composer1.command('/rates', async (ctx) => {
+  await ctx.reply(messeges.ratesQuestion, keyboards.ratesKeyboard);
   return ctx.wizard.next();
 })
 
@@ -19,17 +18,16 @@ const composer2 = new Composer();
 
 composer2 .on('text', async (ctx) => {
   const text = ctx.message.text;
-  if (!textCommandHelper.isRates(texts.ratesQuestion)) {
-    await ctx.reply('Формат не верный');
-    await ctx.reply(text,
-    Markup.keyboard([['UAH', 'RUB'],[ 'EUR', 'PLN', 'KZT'], ['GBP', 'SEK'], ['/main']], {}).oneTime()
-    )
+  if (text.includes('/')) return ctx.scene.leave();
+  if (!textCommandHelper.isRates(text)) {
+    await ctx.reply(messeges.ratesError);
+    await ctx.reply(text, keyboards.ratesKeyboard);
     return ctx.wizard.selectStep(1);
   } else {
-    const data = await cryptoDataManager.getRatesById(texts.ratesQuestion);
+    const data = await cryptoDataManager.getRatesById(text);
     if (data.errors) {
-      await ctx.telegram.sendMessage(chatId, "Ошыбка!!! Не удалось получить данные");
-      await ctx.reply(text)
+      await ctx.telegram.sendMessage(chatId, messeges.readDataError);
+      await ctx.reply(text);
       return ctx.wizard.selectStep(1);
     } else {
       telegramAnswerHandler.reanderOneCoin(ctx, data.data);
@@ -38,15 +36,14 @@ composer2 .on('text', async (ctx) => {
 
   }
 })
+
 composer2 .action('repeat', async (ctx) => {
-  await ctx.reply(texts.ratesQuestion)
+  await ctx.reply(messeges.ratesQuestion);
   return ctx.wizard.selectStep(1);
 });
+
 composer2 .action('exit', async (ctx) => {
-  await ctx.replyWithHTML(texts.start, Markup.keyboard([
-    ['/crypto'],
-    ['/rates'],
-  ]));
+  await ctx.replyWithHTML(messeges.start, keyboards.mainKeyboard);
   return ctx.scene.leave();
 });
 

@@ -1,5 +1,5 @@
 const { Markup } = require("telegraf");
-const messages = require('../templates/messeges');
+const messages = require('../templates/messages');
 
 function findRates(data, symbol, isFiat) {
 

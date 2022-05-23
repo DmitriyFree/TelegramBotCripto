@@ -55,11 +55,37 @@ const ratesSymbols = ["IOV","BZD","PGK","DAI","RSD","ION","QTUM","OSMO","XPD","M
 
 module.exports = {
   isCrypto(value) {
-    if (availableCryptoId.includes(value) || cryptoSymbols.includes(value)) return true;
-    else return false;
+    const returnedObj = {
+      isValid: false,
+      validKey: ''
+    }
+    if (availableCryptoId.includes(value)) {
+      returnedObj.isValid = true;
+      returnedObj.validKey = value;
+    } else {
+      const compareVale = value.toUpperCase();
+      if (cryptoSymbols.includes(compareVale)) {
+        returnedObj.isValid = true;
+        returnedObj.validKey = compareVale;
+      }
+    }
+    return returnedObj;
   },
   isRates(value) {
-    if (availableRatesId.includes(value) || ratesSymbols.includes(value)) return true;
-    else return false;
+    const returnedObj = {
+      isValid: false,
+      validKey: ''
+    }
+    if (availableRatesId.includes(value)) {
+      returnedObj.isValid = true;
+      returnedObj.validKey = value;
+    } else {
+      const compareVale = value.toUpperCase();
+      if (ratesSymbols.includes(compareVale)) {
+        returnedObj.isValid = true;
+        returnedObj.validKey = compareVale;
+      }
+    }
+    return returnedObj;
   }
 }

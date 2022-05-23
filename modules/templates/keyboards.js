@@ -5,9 +5,12 @@ const mainKeyboard = Markup
     [
       ['/totalInfo'],
       ['/rates', '/crypto'],
+      ['/converter'],
       ['/help'],
     ], {})
+  .resize()
   .oneTime()
+
 
 const ratesKeyboard = Markup
   .keyboard(
@@ -15,9 +18,12 @@ const ratesKeyboard = Markup
       ['UAH', 'RUB'],
       [ 'EUR', 'PLN', 'KZT'],
       ['GBP', 'SEK'],
-      ['/main']
+      ['Главное меню']
     ], {})
-  .oneTime();
+  .resize()
+  .oneTime()
+
+
 
 const cryptoKeyboard = Markup
   .keyboard(
@@ -25,12 +31,22 @@ const cryptoKeyboard = Markup
       ['bitcoin', 'ethereum'],
       [ 'litecoin', 'XRP', 'ADA'],
       ['DOGE', 'DOT'],
-      ['/main']
+      ['Главное меню']
     ], {})
-  .oneTime();
+  .resize()
+  .oneTime()
+
+const converterKeyboard = Markup
+  .keyboard(
+    [
+      ['Главное меню']
+    ], {})
+  .resize()
+  .oneTime()
 
 module.exports = {
   mainKeyboard,
   ratesKeyboard,
-  cryptoKeyboard
+  cryptoKeyboard,
+  converterKeyboard
 }

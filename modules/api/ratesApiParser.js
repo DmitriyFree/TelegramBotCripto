@@ -15,11 +15,11 @@ function parsRates(data) {
         rate: item.rateUsd,
         type: item.type
       }
-      returnedData.data.push(newItem);
+      returnedData.data.push(newItem)
      })
   } catch (e) {
-    console.log('error in function parsNationalRates parameter data is empty or no valid', e);
-    returnedData.errors = false;
+    console.log('error in function parsNationalRates parameter data is empty or no valid', e)
+    returnedData.errors = false
   }
   return returnedData;
 }
@@ -30,18 +30,18 @@ module.exports = {
       data: [],
       errors: false
     }
-    const data = await apiReader(url);
+    const data = await apiReader(url)
     if (!data.errors) {
-      const parsedData = parsRates(data.data);
+      const parsedData = parsRates(data.data)
       if (parsedData.errors) {
-        returnedData.errors = true;
+        returnedData.errors = true
       } else {
-        returnedData.data = parsedData.data;
+        returnedData.data = parsedData.data
       }
 
     } else {
-      returnedData.errors = true;
+      returnedData.errors = true
     }
-    return returnedData;
+    return returnedData
   }
 }

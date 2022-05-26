@@ -3,7 +3,7 @@ const {Markup} = require('telegraf');
 const mainKeyboard = Markup
   .keyboard(
     [
-      ['/totalInfo'],
+      ['/totalinfo', '/cryptotop20'],
       ['/rates', '/crypto'],
       ['/converter'],
       ['/help'],
@@ -15,9 +15,9 @@ const mainKeyboard = Markup
 const ratesKeyboard = Markup
   .keyboard(
     [
-      ['UAH', 'RUB'],
-      [ 'EUR', 'PLN', 'KZT'],
-      ['GBP', 'SEK'],
+      ['UAH 🇺🇦', 'RUB 🇷🇺'],
+      [ 'EUR 🇪🇺', 'PLN 🇵🇱', 'KZT 🇰🇿'],
+      ['GBP 🇬🇧', 'JPY 🇯🇵'],
       ['Главное меню']
     ], {})
   .resize()

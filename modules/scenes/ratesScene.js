@@ -28,7 +28,7 @@ composer2.hears('Главное меню', async (ctx) => {
 
 composer2.on('text', async (ctx) => {
   try {
-    const text = ctx.message.text;
+    const text = ctx.message.text.split(' ')[0];
     const responseObj = textCommandValidator.isRates(text)
     if (!responseObj.isValid) {
       await ctx.reply(messages.ratesError);

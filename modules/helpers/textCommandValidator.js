@@ -17,7 +17,7 @@ const availableCryptoId = ["bitcoin","ethereum","tether","usd-coin","binance-coi
 "taboo-token","bella-protocol","mithril","mirror-protocol","aion","apollo-currency","crpt","bosagora","fc-barcelona-fan-token","bytom","waltonchain","beam","dock","apenft","dodo","time-new-bank","dforce","newscrypto","suku","router-protocol","gifto","nimiq","ariva","insurace","polkadex","cream-finance","powerpool","solanium","oneledger",
 "the-force-protocol","dora-factory","vite","new-bitshares","gamercoin","ternoa","v-systems","burger-swap","sentinel","chainx","zkswap","dego-finance","hackenai","sora","cellframe","unifi-protocol-dao","prizm","shyft-network","stratos","vidt-datalink","grin","perlin","chain-guardians","xeno-token","arcblock","lossless","pivx","sharetoken","rubic",
 "tokenclub","revv","epns","polkafoundry","dotmoovs","pendle","oraichain-token","antimatter","sentivate","pangolin","metahash","meta","dsla-protocol","paid-network","acent","sylo","unilend","polkamon","nebulas-token","openocean","polkamarkets","wom-protocol","nav-coin","populous","baasid","roobee","jupiter","hapi-one","morpheus-labs","ubix-network",
-"exeedme","julswap","seele","multivac","dentacoin","konomi-network","gameswap","mahadao","pickle-finance","cardstack"];
+"exeedme","julswap","seele","multivac","dentacoin","konomi-network","gameswap","mahadao","pickle-finance","cardstack"]
 
 const cryptoSymbols = ["BTC","ETH","USDT","USDC","BNB","XRP","BUSD","ADA","SOL","DOGE","DOT","WBTC","AVAX","TRX","DAI","SHIB","MATIC","LTC","CRO","LEO","NEAR","FTT","UNI","BCH","LINK","XMR","XLM","BTCB","ALGO","FLOW","ATOM",
 "ETC","MANA","EGLD","VET","ICP","FIL","XTZ","SAND","KCS","ZEC","HBAR","CAKE","MKR","DFI","EOS","AXS","AAVE","KLAY","THETA","TUSD","HT","GRT","FTM","TTT","RUNE","HNT","USDP","BSV","MIOTA","XEC","QNT","NEXO","NEO","OKB","CHZ","STX","KSM","ZIL","LRC","DASH","WAVES",
@@ -44,7 +44,7 @@ const availableRatesId = ["iov-blockchain","belize-dollar","papua-new-guinean-ki
 "ghanaian-cedi","bhutanese-ngultrum","mexican-peso","brazilian-real","zimbabwean-dollar","trinidad-and-tobago-dollar","cfp-franc","paraguayan-guarani","colombian-peso","iraqi-dinar","nicaraguan-córdoba","mongolian-tugrik","thai-baht","eos","south-african-rand","vietnamese-dong","namibian-dollar","united-arab-emirates-dirham",
 "east-caribbean-dollar","nigerian-naira","israeli-new-sheqel","lebanese-pound","platinum-ounce","south-sudanese-pound","mauritian-rupee","tanzanian-shilling","tajikistani-somoni","syrian-pound","brunei-dollar","singapore-dollar","british-pound-sterling","likecoin","swedish-krona","chinese-yuan-(offshore)","nepalese-rupee",
 "costa-rican-colón","georgian-lari","venezuelan-bolívar-soberano","algerian-dinar","qatari-rial","libyan-dinar","iranian-rial","uruguayan-peso","seychellois-rupee","falkland-islands-pound","canadian-dollar","bermudan-dollar","malawian-kwacha",
-"peruvian-nuevo-sol","belarusian-ruble","philippine-peso","tunisian-dinar","turkmenistani-manat","kenyan-shilling","south-korean-won","pakistani-rupee"];
+"peruvian-nuevo-sol","belarusian-ruble","philippine-peso","tunisian-dinar","turkmenistani-manat","kenyan-shilling","south-korean-won","pakistani-rupee"]
 
 const ratesSymbols = ["IOV","BZD","PGK","DAI","RSD","ION","QTUM","OSMO","XPD","MRO","MYR","WAVES","ANG","CDF","MOP","LSL","JPY","DJF","GIP","AMD","ZMW","NOK","CZK","RON","CHF","VUV","PLN","IRIS","KYD","AWG","KGS","BIF","HRK","SAR","INR","MDL",
 "BDT","TRY","BNB","SOS","JMD","LRD","RWF","KMF","SHP","WETH","DOGE","MZN","ARS","IMP","DASH","BTC","MAD","GTQ","TWD","HNL","XAG","BBD","MKD","GGP","BWP","EUR","JEP","UST","AOA","HTG","DVPN","BOB","XPRT","RUNE","CVE","JOD","CLF","SVC","CUC","HKD",
@@ -60,13 +60,13 @@ module.exports = {
       validKey: ''
     }
     if (availableCryptoId.includes(value)) {
-      returnedObj.isValid = true;
+      returnedObj.isValid = true
       returnedObj.validKey = value;
     } else {
       const compareVale = value.toUpperCase();
       if (cryptoSymbols.includes(compareVale)) {
-        returnedObj.isValid = true;
-        returnedObj.validKey = compareVale;
+        returnedObj.isValid = true
+        returnedObj.validKey = compareVale
       }
     }
     return returnedObj;
@@ -77,15 +77,15 @@ module.exports = {
       validKey: ''
     }
     if (availableRatesId.includes(value)) {
-      returnedObj.isValid = true;
-      returnedObj.validKey = value;
+      returnedObj.isValid = true
+      returnedObj.validKey = value
     } else {
-      const compareVale = value.toUpperCase();
+      const compareVale = value.toUpperCase()
       if (ratesSymbols.includes(compareVale)) {
-        returnedObj.isValid = true;
-        returnedObj.validKey = compareVale;
+        returnedObj.isValid = true
+        returnedObj.validKey = compareVale
       }
     }
-    return returnedObj;
+    return returnedObj
   }
 }

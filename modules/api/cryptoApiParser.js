@@ -16,13 +16,13 @@ function parsCriptoData(data) {
         capitalization: item.marketCapUsd,
         change: item.changePercent24Hr
       }
-      returnedData.data.push(newItem);
+      returnedData.data.push(newItem)
      })
   } catch (e) {
-    console.log('error in function parsCriptoData parameter data is empty or no valid', e);
-    returnedData.errors = true;
+    console.log('error in function parsCriptoData parameter data is empty or no valid', e)
+    returnedData.errors = true
   }
-  return returnedData;
+  return returnedData
 }
 
 module.exports = {
@@ -31,14 +31,14 @@ module.exports = {
       data: [],
       errors: false
     }
-    const data = await apiReader(apiUrl);
+    const data = await apiReader(apiUrl)
     if (!data.errors) {
-       const parsedData = parsCriptoData(data.data);
-       if (parsedData.errors) returnedData.errors = true;
-       else returnedData.data = parsedData.data;
+       const parsedData = parsCriptoData(data.data)
+       if (parsedData.errors) returnedData.errors = true
+       else returnedData.data = parsedData.data
     } else {
-      returnedData.errors = true;
+      returnedData.errors = true
     }
-    return returnedData;
+    return returnedData
   }
 }
